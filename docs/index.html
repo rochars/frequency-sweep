@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Home - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#sweep">sweep</a></li></ul>
+</nav>
+
+<div id="main">
+    
+
+    
+
+
+
+    
+
+
+
+
+
+
+
+
+
+    
+
+
+    <section class="readme">
+        <article><h1>frequency-sweep</h1><p>Sweep tone generator.<br>Copyright (c) 2018 Rafael da Silva Rocha.<br>https://github.com/rochars/frequency-sweep</p>
+<p><a href="https://www.npmjs.com/package/frequency-sweep"><img src="https://img.shields.io/npm/v/frequency-sweep.svg?style=for-the-badge" alt="NPM version"></a> <a href="https://rochars.github.io/frequency-sweep/index.html"><img src="https://img.shields.io/badge/docs-online-blue.svg?style=for-the-badge" alt="Docs"></a><br><a href="https://codecov.io/gh/rochars/frequency-sweep"><img src="https://img.shields.io/codecov/c/github/rochars/frequency-sweep.svg?style=flat-square" alt="Codecov"></a> <a href="https://travis-ci.org/rochars/frequency-sweep"><img src="https://img.shields.io/travis/rochars/frequency-sweep.svg?style=flat-square" alt="Unix Build"></a> <a href="https://ci.appveyor.com/project/rochars/frequency-sweep"><img src="https://img.shields.io/appveyor/ci/rochars/frequency-sweep.svg?style=flat-square&amp;logo=appveyor" alt="Windows Build"></a> <a href="https://scrutinizer-ci.com/g/rochars/frequency-sweep/"><img src="https://img.shields.io/scrutinizer/g/rochars/frequency-sweep.svg?style=flat-square&amp;logo=scrutinizer" alt="Scrutinizer"></a></p>
+<h2>Install</h2><pre class="prettyprint source"><code>npm install frequency-sweep</code></pre><h2>Use</h2><pre class="prettyprint source lang-javascript"><code>/**
+ * Return the samples of a frequency sweep. The sweep may be divided
+ * in segments, each using a different waveform (or noise), and each with
+ * a start and end frequency.
+ * @param {!Array&lt;Object&lt;!string, string|number>>} sequence The sequence.
+ *      Each item in the array must have the properties:
+ *          start: Integer value, the start frequency of the segment.
+ *          end: Integer value, the end frequency of the segment.
+ *          time: Float value, the duration of the segment. 1 = 1 second.
+            wave: String, &quot;sine&quot;, &quot;square&quot;, &quot;triangle&quot;, &quot;sawtooth&quot; or &quot;noise&quot;.
+ * @param {!number} sampleRate The sample rate.
+ * @return {!Array&lt;number>}
+ */
+function sweep(sequence, sampleRate) {}</code></pre><h3>Example</h3><pre class="prettyprint source lang-javascript"><code>// Define a sweep sequence.
+// This one have 2 steps, each using a different waveform.
+const sequence = [
+    {
+        &quot;start&quot;: 1, // start in 1 Hz
+        &quot;end&quot;: 100, // end in 100 Hz
+        &quot;time&quot;: 1, // goes from 1 Hz to 100 Hz in 1 second
+        &quot;wave&quot;: &quot;sine&quot; // use a sine wave
+    },
+    {
+        &quot;start&quot;: 100, // start in 100 Hz
+        &quot;end&quot;: 1400, // end in 1.4 kHz
+        &quot;time&quot;: 5, // goes from 100 Hz to 1.4 kHz in 5 seconds
+        &quot;wave&quot;: &quot;sawtooth&quot; // use a sawtooth wave
+    }
+];
+
+// Get the samples of the 2-step sweep sequence.
+// The samples are 64-bit and in the -1 to 1 range.
+let samples = sweep(sequence, 8000));</code></pre><h2>LICENSE</h2><p>Copyright (c) 2018 Rafael da Silva Rocha.</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+&quot;Software&quot;), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p></article>
+    </section>
+
+
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun May 06 2018 04:24:27 GMT-0300 (Hora oficial do Brasil) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>
