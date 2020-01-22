@@ -23,35 +23,22 @@
  */
 
 /**
- * @fileoverview Function to create multi-stage frequency sweeps.
+ * @fileoverview Externs for frequency-sweep 1.0
  * @see https://github.com/rochars/frequency-sweep
+ * @externs
  */
 
-/**
- * Waveform functions.
- * @private
- */
+// Waveform functions.
 const WAVES = {
-  noise: function(t, delta, phase, start, end, phi0) {
-    return Math.random() * (1 - (-1)) + (-1);
-  },
-  sine: function(t, delta, phase, start, end, phi0) {
-    phase = 2 * Math.PI * t * (start + (end - start) * delta / 2);
-    return Math.sin(phase + phi0);
-  },
-  triangle: function(t, delta, phase, start, end, phi0) {
-    phase = 2 * Math.PI * t * (start + (end - start) * delta / 2);
-    return (2 / Math.PI) * Math.asin(Math.sin(phase + phi0));
-  },
-  sawtooth: function(t, delta, phase, start, end, phi0) {
-    phase = 2 * Math.PI * t * (start + (end - start) * (delta / 2)) / 2;
-    return (2 / Math.PI) * Math.atan(Math.tan(phase + phi0));
-  },
-  square: function(t, delta, phase, start, end, phi0) {
-    phase = 2 * Math.PI * t * (start + (end - start) * delta / 2);
-    return Math.sign(Math.sin(phase + phi0));
-  }
+  noise: function(t, delta, phase, start, end, phi0) {},
+  sine: function(t, delta, phase, start, end, phi0) {},
+  triangle: function(t, delta, phase, start, end, phi0) {},
+  sawtooth: function(t, delta, phase, start, end, phi0) {},
+  square: function(t, delta, phase, start, end, phi0) {}
 };
+
+// A sweep sequence
+var sequence = {start: 1, end: 2, time: 1, wave: "square"};
 
 /**
  * Return the samples of a frequency sweep. The sweep may be divided
@@ -66,29 +53,4 @@ const WAVES = {
  * @param {number} sampleRate The sample rate.
  * @return {!Array<number>}
  */
-export function sweep(sequence, sampleRate) {
-  let phi0 = 0;
-  let phase = 0;
-  let numSamples = 0;
-  let duration = 0;
-  let delta = 0;
-  let samples = [];
-  for (let i = 0; i < sequence.length; i++) {
-    numSamples = Math.round(sampleRate * sequence[i].time);
-    duration = numSamples / sampleRate;
-    for (let x = 0; x < numSamples; x++) {
-      delta = x / numSamples;
-      samples.push(
-        WAVES[sequence[i].wave](
-          duration * delta,
-          delta, phase,
-          sequence[i].start,
-          sequence[i].end,
-          phi0));
-    }
-    phase = 2 * Math.PI * duration *
-        (sequence[i].start + (sequence[i].end - sequence[i].start) / 2);
-    phi0 = phi0 + phase;
-  }
-  return samples;
-}
+function sweep(sequence, sampleRate) {}

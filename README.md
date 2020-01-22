@@ -1,56 +1,67 @@
 # frequency-sweep
-Sweep tone generator.  
-Copyright (c) 2018 Rafael da Silva Rocha.  
+Copyright (c) Rafael da Silva Rocha.  
 https://github.com/rochars/frequency-sweep
 
-[![NPM version](https://img.shields.io/npm/v/frequency-sweep.svg?style=for-the-badge)](https://www.npmjs.com/package/frequency-sweep) [![Docs](https://img.shields.io/badge/docs-online-blue.svg?style=for-the-badge)](https://rochars.github.io/frequency-sweep/index.html)  
+[![NPM version](https://img.shields.io/npm/v/frequency-sweep.svg?style=for-the-badge)](https://www.npmjs.com/package/frequency-sweep) [![Docs](https://img.shields.io/badge/API-docs-blue.svg?style=for-the-badge)](https://rochars.github.io/frequency-sweep/docs/api) [![Use](https://img.shields.io/badge/use-online-blue.svg?style=for-the-badge)](https://rochars.github.io/frequency-sweep/docs/index.html)  
 [![Codecov](https://img.shields.io/codecov/c/github/rochars/frequency-sweep.svg?style=flat-square)](https://codecov.io/gh/rochars/frequency-sweep) [![Unix Build](https://img.shields.io/travis/rochars/frequency-sweep.svg?style=flat-square)](https://travis-ci.org/rochars/frequency-sweep) [![Windows Build](https://img.shields.io/appveyor/ci/rochars/frequency-sweep.svg?style=flat-square&logo=appveyor)](https://ci.appveyor.com/project/rochars/frequency-sweep) [![Scrutinizer](https://img.shields.io/scrutinizer/g/rochars/frequency-sweep.svg?style=flat-square&logo=scrutinizer)](https://scrutinizer-ci.com/g/rochars/frequency-sweep/)
+
+Sweep tone generator to create chirps with multiple stages.
 
 ## Install
 ```
 npm install frequency-sweep
 ```
 
-## Use
+## Example
+```javascript
+const sweep = require('frequency-sweep').sweep;
+
+// Define a sweep sequence.
+// This sequence have 2 steps, each using a different waveform.
+const sequence = [
+  {
+    start: 1, // start in 1 Hz
+    end: 100, // end in 100 Hz
+    time: 1, // goes from 1 Hz to 100 Hz in 1 second
+    wave: "sine" // use a sine wave
+  },
+  {
+    start: 100, // start in 100 Hz
+    end: 1400, // end in 1.4 kHz
+    time: 5.2, // goes from 100 Hz to 1.4 kHz in 5.2 seconds
+    wave: "sawtooth" // use a sawtooth wave
+  }
+];
+
+// Get the samples of the 2-step sweep sequence in 44.1kHz.
+// The samples are 64-bit, in the -1 to 1 range.
+let samples = sweep(sequence, 44100);
+```
+
+### Available waveforms:
+- *'sine'*
+- *'triangle'*
+- *'square'*
+- *'sawtooth'*
+
+*'noise'* is also available.
+
+## API
 ```javascript
 /**
  * Return the samples of a frequency sweep. The sweep may be divided
  * in segments, each using a different waveform (or noise), and each with
  * a start and end frequency.
- * @param {!Array<Object<!string, string|number>>} sequence The sequence.
- *      Each item in the array must have the properties:
- *          start: Integer value, the start frequency of the segment.
- *          end: Integer value, the end frequency of the segment.
- *          time: Float value, the duration of the segment. 1 = 1 second.
-            wave: String, "sine", "square", "triangle", "sawtooth" or "noise".
- * @param {!number} sampleRate The sample rate.
+ * @param {!Array<Object<string, string|number>>} sequence The sequence.
+ *   Each item in the array must have the properties:
+ *     start: Integer value, the start frequency of the segment.
+ *     end: Integer value, the end frequency of the segment.
+ *     time: Float value, the duration of the segment. 1 = 1 second.
+ *     wave: String, "sine", "square", "triangle", "sawtooth" or "noise".
+ * @param {number} sampleRate The sample rate.
  * @return {!Array<number>}
  */
 function sweep(sequence, sampleRate) {}
-```
-
-### Example
-```javascript
-// Define a sweep sequence.
-// This one have 2 steps, each using a different waveform.
-const sequence = [
-	{
-		"start": 1, // start in 1 Hz
-		"end": 100, // end in 100 Hz
-		"time": 1, // goes from 1 Hz to 100 Hz in 1 second
-		"wave": "sine" // use a sine wave
-	},
-	{
-		"start": 100, // start in 100 Hz
-		"end": 1400, // end in 1.4 kHz
-		"time": 5, // goes from 100 Hz to 1.4 kHz in 5 seconds
-		"wave": "sawtooth" // use a sawtooth wave
-	}
-];
-
-// Get the samples of the 2-step sweep sequence.
-// The samples are 64-bit and in the -1 to 1 range.
-let samples = sweep(sequence, 8000));
 ```
 
 ## LICENSE
