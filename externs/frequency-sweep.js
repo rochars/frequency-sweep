@@ -28,6 +28,8 @@
  * @externs
  */
 
+var frequencySweep;
+
 // Waveform functions.
 const WAVES = {
   noise: function(t, delta, phase, start, end, phi0) {},
