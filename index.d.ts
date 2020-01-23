@@ -14,8 +14,8 @@
  *     time: Float value, the duration of the segment. 1 = 1 second.
  *     wave: String, "sine", "square", "triangle", "sawtooth" or "noise".
  * @param {number} sampleRate The sample rate.
- * @param {?boolean=} outputTyped True to return Float64Array, false for Array.
- * @return {!Array<number>|Float64Array}
+ * @param {?boolean} outputTyped True to return Float64Array, false for Array.
+ * @return {!Array<number>|!Float64Array}
  */
 export function sweep(
     sequence: Array<object>,
