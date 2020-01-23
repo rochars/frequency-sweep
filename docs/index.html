@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="JavaScript sweep synthesizer.">
+  <title>frequency-sweep</title>
+  <link rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+    crossorigin="anonymous">
+  <style>
+    body {
+      margin-top: 210px;
+      margin-bottom: 160px;
+    }
+    h1 {
+      font-size: 1.5em;
+    }
+    ol {
+      margin: 0 0 0 20px;
+      padding: 0;
+    }
+    ol li {
+      margin: 0 0 10px 0;
+    }
+    .header {
+      padding: 10px 20px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background-color: #eee;
+    }
+    .wave-spec-container * {
+      overflow: hidden !important;
+    }
+    .sample-controls {
+      padding: 10px 20px;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: #eee;
+    }
+    /* sample controls */
+    .sample-controls * {
+      font-size: 0.9em;
+    }
+    .sample-config {
+      font-size: 0.9em;
+    }
+    .sample-config label {
+      display: inline-block;
+    }
+    .form-control-range {
+      display: inline;
+    }
+    .input-wave-form {
+      font-size: 0.8em;
+    }
+    .remove {
+      font-size: 0.6em;
+    }
+    
+    @media only screen and (max-device-width: 480px) {
+      .browser-warning {
+        margin: 0;
+        font-size: 0.8em;
+      }
+      body {
+        margin-top: 220px;
+      }
+      .sweep-steps {
+        font-size: 0.7em;
+      }
+      .sample-controls {
+        font-size: 0.8em;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <h1><a href="https://github.com/rochars/frequency-sweep">Sweep Synthesizer</a></h1>
+  <p class="browser-warning">Browsers usually play at 44.1kHz, so what you hear and see here might be different from the downloaded file. Some browsers will not play all possible sample rates.</p>
+
+  <!-- player -->
+  <div class="wave-spec-container">
+    <div id="wave-spec" class="wave-spec">
+    </div>
+  </div>
+  <!--/player -->
+</div>
+
+<!-- stages -->
+<form>
+  <ol id="sweep-steps" class="sweep-steps">
+    <li>
+      <label>
+        Start (Hz):
+        <input type="text" name="wave0-start" class="form-control" value="440">
+      </label>
+      <label>
+        End (Hz):
+        <input type="text" name="wave0-end" class="form-control" value="1">
+      </label>
+      <label>Duration (s):
+        <input type="text" name="wave0-time" class="form-control" value="1">
+      </label>
+      <div class="input-wave-form">
+        <label>
+          <input type="radio" name="wave0" value="sine" checked="checked"> Sine
+        </label>
+        <label>
+          <input type="radio" name="wave0" value="triangle"> Triangle
+        </label>
+        <label>
+          <input type="radio" name="wave0" value="sawtooth"> Sawtooth
+        </label>
+        <label>
+          <input type="radio" name="wave0" value="square"> Square
+        </label>
+        <label>
+          <input type="radio" name="wave0" value="noise"> Noise
+        </label>
+      </div>
+    </li>
+  </ol>  
+</form>
+<!--/stages -->
+
+<!-- controls -->
+<div class="sample-controls">
+
+  <!-- configuration -->
+  <div class="sample-config">
+    <label>
+      Sample rate (Hz):
+      <input
+        type="text" name="sample-rate" id="sample-rate"
+        value="44100" class="form-control">
+    </label>
+    <label>
+      Volume:
+      <input type="range" min="1" max="100" value="100"
+        id="volume" class="form-control-range">
+    </label>
+  </div>
+  <!--/configuration -->
+
+  <div class="player-controls-buttons">
+    <input type="button"
+      value="+ steps"
+      class="btn btn-dark"
+      onclick="moreSteps();">
+    <input type="button"
+      value="Load"
+      class="btn btn-primary"
+      onclick="getSamples(true);this.value='Reload'">
+    <input type="button"
+      value="Play"
+      class="btn btn-dark"
+      onclick="wave_spec.playPause()">
+    <input type="button"
+      value="Download"
+      class="btn btn-dark"
+      onclick="getSamples(false);">
+  </div>
+
+</div>
+<!--/controls -->
+
+<script src="https://unpkg.com/frequency-sweep"></script>
+<script src="https://unpkg.com/file-saver"></script>
+<script src="https://unpkg.com/uuid-random"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+  integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+  crossorigin="anonymous"></script>
+<script src="https://unpkg.com/wavesurfer.js"></script>
+<script src="https://unpkg.com/wavefile"></script>
+
+<script type="text/javascript">
+
+// The wavesurfer container
+var wave_spec = WaveSurfer.create({
+  container: '#wave-spec',
+  waveColor: 'lime',
+  progressColor: 'fuchsia',
+  backgroundColor: 'black',
+  backend: 'MediaElement',
+  height: '80',
+  splitChannels: true
+});
+
+// Add stages
+function moreSteps() {
+  var uid = 'wave' + uuid();
+  $("#sweep-steps").append('<li>' +
+    '<label>Start (Hz):<input type="text" name="' + uid + '-start" class="form-control"></label> ' +
+    '<label>End (Hz):<input type="text" name="' + uid + '-end" class="form-control"></label> ' +
+    '<label>Duration (s):<input type="text" name="' + uid + '-time" class="form-control"></label>' +
+    '<div class="input-wave-form">' +
+      '<label><input type="radio" name="' + uid + '" value="sine" checked="checked"> Sine</label> ' +
+      '<label><input type="radio" name="' + uid + '" value="triangle"> Triangle</label> ' +
+      '<label><input type="radio" name="' + uid + '" value="sawtooth"> Sawtooth</label> ' +
+      '<label><input type="radio" name="' + uid + '" value="square"> Square</label> ' +
+      '<label><input type="radio" name="' + uid + '" value="noise"> Noise</label>' +
+    '</div>' +
+    '<input type="button" value="Remove this step" class="btn btn-secondary remove" onclick="$(this.parentNode).remove();">' +
+  '</li>');
+  window.scrollTo(0, document.body.scrollHeight);
+  $('input[name="' + uid + '-start"]').focus();
+}
+
+// Validate a stage
+function validateStep(step, nodeName) {
+  return ( parseFloat(step.find('input[name="' + nodeName + '-start"]').val()) > 0 &&
+    parseFloat(step.find('input[name="' + nodeName + '-end"]').val()) > 0 &&
+    parseFloat(step.find('input[name="' + nodeName + '-time"]').val()) > 0);
+}
+
+function loadWavInPlayer(wav) { 
+  wave_spec.load(wav.toDataURI());
+}
+
+function downloadFile(wav) { 
+  saveAs(wav.toDataURI(), 'sweep.wav');
+  loadWavInPlayer(wav);
+}
+
+// Load a wav file based on the
+// sweep definition
+function getSamples(player) {
+  var bitDepth = '64';
+  var sampleRate = parseInt($('input[name="sample-rate"]').val());
+  var sequence = [];
+  $( "#sweep-steps li" ).each(function( index ) {
+    var thisNode = $('input[type=radio]', this).get(0).name;
+    if (validateStep($(this), thisNode)) {
+      sequence.push({
+        'start': parseFloat($(this).find('input[name="' + thisNode + '-start"]').val()),
+        'end': parseFloat($(this).find('input[name="' + thisNode + '-end"]').val()),
+        'time': parseFloat($(this).find('input[name="' + thisNode + '-time"]').val()),
+        'wave': $('input[name=' + thisNode + ']:checked').val()
+      });
+    }
+  });
+  if (sequence.length) {
+    // Create the sweep
+    var samples = frequencySweep.sweep(sequence, sampleRate);
+    // Effects
+    var volume = document.getElementById("volume").value / 100
+    for (let i = 0; i < samples.length; i++) {
+        samples[i] = samples[i] * volume;
+    }
+    // Create the file
+    var wav = new wavefile.WaveFile();
+    wav.fromScratch(1, sampleRate, '32f', samples);
+    wav.toBitDepth("24");
+    // Load the file
+    if (player) {
+      loadWavInPlayer(wav);
+    } else {
+      downloadFile(wav);
+    }
+  }else {
+    alert('Check the fields. Use only numbers greater than zero.');
+  }
+}
+</script>
+
+</body>
+</html>

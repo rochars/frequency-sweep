@@ -60,14 +60,14 @@
         <article><h1>frequency-sweep</h1>
 <p>Copyright (c) Rafael da Silva Rocha.<br>
 https://github.com/rochars/frequency-sweep</p>
-<p><a href="https://www.npmjs.com/package/frequency-sweep"><img src="https://img.shields.io/npm/v/frequency-sweep.svg?style=for-the-badge" alt="NPM version"></a> <a href="https://rochars.github.io/frequency-sweep/docs/api"><img src="https://img.shields.io/badge/API-docs-blue.svg?style=for-the-badge" alt="Docs"></a> <a href="https://rochars.github.io/frequency-sweep/docs/index.html"><img src="https://img.shields.io/badge/use-online-blue.svg?style=for-the-badge" alt="Use"></a><br>
+<p><a href="https://www.npmjs.com/package/frequency-sweep"><img src="https://img.shields.io/npm/v/frequency-sweep.svg?style=for-the-badge" alt="NPM version"></a> <a href="https://rochars.github.io/frequency-sweep/api"><img src="https://img.shields.io/badge/API-docs-blue.svg?style=for-the-badge" alt="Docs"></a> <a href="https://rochars.github.io/frequency-sweep/index.html"><img src="https://img.shields.io/badge/use-online-blue.svg?style=for-the-badge" alt="Use"></a><br>
 <a href="https://codecov.io/gh/rochars/frequency-sweep"><img src="https://img.shields.io/codecov/c/github/rochars/frequency-sweep.svg?style=flat-square" alt="Codecov"></a> <a href="https://travis-ci.org/rochars/frequency-sweep"><img src="https://img.shields.io/travis/rochars/frequency-sweep.svg?style=flat-square" alt="Unix Build"></a> <a href="https://ci.appveyor.com/project/rochars/frequency-sweep"><img src="https://img.shields.io/appveyor/ci/rochars/frequency-sweep.svg?style=flat-square&amp;logo=appveyor" alt="Windows Build"></a> <a href="https://scrutinizer-ci.com/g/rochars/frequency-sweep/"><img src="https://img.shields.io/scrutinizer/g/rochars/frequency-sweep.svg?style=flat-square&amp;logo=scrutinizer" alt="Scrutinizer"></a></p>
 <p>Sweep tone generator to create chirps with multiple stages.</p>
 <h2>Install</h2>
 <pre class="prettyprint source"><code>npm install frequency-sweep
 </code></pre>
 <h2>Example</h2>
-<pre class="prettyprint source lang-javascript"><code>const sweep = require('frequency-sweep').sweep;
+<pre class="prettyprint source lang-javascript"><code>const frequencySweep = require('frequency-sweep');
 
 // Define a sweep sequence.
 // This sequence have 2 steps, each using a different waveform.
@@ -88,7 +88,7 @@ const sequence = [
 
 // Get the samples of the 2-step sweep sequence in 44.1kHz.
 // The samples are 64-bit, in the -1 to 1 range.
-let samples = sweep(sequence, 44100);
+let samples = frequencySweep.sweep(sequence, 44100);
 </code></pre>
 <h3>Available waveforms:</h3>
 <ul>
@@ -98,6 +98,12 @@ let samples = sweep(sequence, 44100);
 <li><em>'sawtooth'</em></li>
 </ul>
 <p><em>'noise'</em> is also available.</p>
+<h2>In the browser:</h2>
+<pre class="prettyprint source lang-html"><code>&lt;script src=&quot;https://unpkg.com/frequency-sweep&quot;>&lt;/script>
+&lt;script>
+var samples = frequencySweep.sweep(sequence, 44100);
+&lt;/script>
+</code></pre>
 <h2>API</h2>
 <pre class="prettyprint source lang-javascript"><code>/**
  * Return the samples of a frequency sweep. The sweep may be divided

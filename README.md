@@ -2,7 +2,7 @@
 Copyright (c) Rafael da Silva Rocha.  
 https://github.com/rochars/frequency-sweep
 
-[![NPM version](https://img.shields.io/npm/v/frequency-sweep.svg?style=for-the-badge)](https://www.npmjs.com/package/frequency-sweep) [![Docs](https://img.shields.io/badge/API-docs-blue.svg?style=for-the-badge)](https://rochars.github.io/frequency-sweep/docs/api) [![Use](https://img.shields.io/badge/use-online-blue.svg?style=for-the-badge)](https://rochars.github.io/frequency-sweep/docs/index.html)  
+[![NPM version](https://img.shields.io/npm/v/frequency-sweep.svg?style=for-the-badge)](https://www.npmjs.com/package/frequency-sweep) [![Docs](https://img.shields.io/badge/API-docs-blue.svg?style=for-the-badge)](https://rochars.github.io/frequency-sweep/api) [![Use](https://img.shields.io/badge/use-online-blue.svg?style=for-the-badge)](https://rochars.github.io/frequency-sweep/index.html)  
 [![Codecov](https://img.shields.io/codecov/c/github/rochars/frequency-sweep.svg?style=flat-square)](https://codecov.io/gh/rochars/frequency-sweep) [![Unix Build](https://img.shields.io/travis/rochars/frequency-sweep.svg?style=flat-square)](https://travis-ci.org/rochars/frequency-sweep) [![Windows Build](https://img.shields.io/appveyor/ci/rochars/frequency-sweep.svg?style=flat-square&logo=appveyor)](https://ci.appveyor.com/project/rochars/frequency-sweep) [![Scrutinizer](https://img.shields.io/scrutinizer/g/rochars/frequency-sweep.svg?style=flat-square&logo=scrutinizer)](https://scrutinizer-ci.com/g/rochars/frequency-sweep/)
 
 Sweep tone generator to create chirps with multiple stages.
@@ -14,7 +14,7 @@ npm install frequency-sweep
 
 ## Example
 ```javascript
-const sweep = require('frequency-sweep').sweep;
+const frequencySweep = require('frequency-sweep');
 
 // Define a sweep sequence.
 // This sequence have 2 steps, each using a different waveform.
@@ -35,7 +35,7 @@ const sequence = [
 
 // Get the samples of the 2-step sweep sequence in 44.1kHz.
 // The samples are 64-bit, in the -1 to 1 range.
-let samples = sweep(sequence, 44100);
+let samples = frequencySweep.sweep(sequence, 44100);
 ```
 
 ### Available waveforms:
@@ -45,6 +45,14 @@ let samples = sweep(sequence, 44100);
 - *'sawtooth'*
 
 *'noise'* is also available.
+
+## In the browser:
+```html
+<script src="https://unpkg.com/frequency-sweep"></script>
+<script>
+var samples = frequencySweep.sweep(sequence, 44100);
+</script>
+```
 
 ## API
 ```javascript
