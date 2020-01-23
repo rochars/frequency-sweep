@@ -18,7 +18,6 @@ describe("Interface tests", function() {
   ];
 
   it("Should have the sweep() function available", function() {
-    console.log(sweep(sequence, 8000));
     assert.ok(sweep(sequence, 8000));
   });
 
