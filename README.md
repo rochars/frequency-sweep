@@ -2,7 +2,7 @@
 Copyright (c) Rafael da Silva Rocha.  
 https://github.com/rochars/frequency-sweep
 
-[![NPM version](https://img.shields.io/npm/v/frequency-sweep.svg?style=for-the-badge)](https://www.npmjs.com/package/frequency-sweep) [![Docs](https://img.shields.io/badge/API-docs-blue.svg?style=for-the-badge)](https://rochars.github.io/frequency-sweep/api) [![Use](https://img.shields.io/badge/use-online-blue.svg?style=for-the-badge)](https://rochars.github.io/frequency-sweep/index.html)  
+[![NPM version](https://img.shields.io/npm/v/frequency-sweep.svg?style=for-the-badge)](https://www.npmjs.com/package/frequency-sweep) [![Docs](https://img.shields.io/badge/API-docs-blue.svg?style=for-the-badge)](https://rochars.github.io/frequency-sweep/api) [![Use](https://img.shields.io/badge/use-online-blue.svg?style=for-the-badge)](https://rochars.github.io/frequency-sweep)  
 [![Codecov](https://img.shields.io/codecov/c/github/rochars/frequency-sweep.svg?style=flat-square)](https://codecov.io/gh/rochars/frequency-sweep) [![Unix Build](https://img.shields.io/travis/rochars/frequency-sweep.svg?style=flat-square)](https://travis-ci.org/rochars/frequency-sweep) [![Windows Build](https://img.shields.io/appveyor/ci/rochars/frequency-sweep.svg?style=flat-square&logo=appveyor)](https://ci.appveyor.com/project/rochars/frequency-sweep) [![Scrutinizer](https://img.shields.io/scrutinizer/g/rochars/frequency-sweep.svg?style=flat-square&logo=scrutinizer)](https://scrutinizer-ci.com/g/rochars/frequency-sweep/)
 
 Sweep tone generator to create chirps with multiple stages.
