@@ -64,7 +64,7 @@ const WAVES = {
  *     time: Float value, the duration of the segment. 1 = 1 second.
  *     wave: String, "sine", "square", "triangle", "sawtooth" or "noise".
  * @param {number} sampleRate The sample rate.
- * @param {?boolean=} outputTyped True to return Float64Array, false for Array.
+ * @param {?boolean} outputTyped True to return Float64Array, false for Array.
  * @return {!Array<number>|!Float64Array}
  */
 export function sweep(sequence, sampleRate, outputTyped=false) {
@@ -78,14 +78,9 @@ export function sweep(sequence, sampleRate, outputTyped=false) {
   let duration = 0;
   /** @type {number} */
   let delta = 0;
-  /** @type {!Array|!Float64Array} */
-  let samples = [];
-  if (outputTyped) {
-    samples = new Float64Array(getOutputArraySize_(sequence, sampleRate));
-  }
-  /** @type {number} */
-  let x = 0;
-  for (let i = 0; i < sequence.length; i++) {
+  /** @type {!Array<number>|!Float64Array} */
+  let samples = getOutputObject_(sequence, sampleRate, outputTyped);
+  for (let i = 0, x = 0; i < sequence.length; i++) {
     numSamples = Math.round(sampleRate * sequence[i].time);
     duration = numSamples / sampleRate;
     /** @type {number} */
@@ -103,17 +98,21 @@ export function sweep(sequence, sampleRate, outputTyped=false) {
 }
 
 /**
- * Return the size of the output array.
+ * Return the output object, Array or Float64Array.
  * @param {!Array<Object<string, string|number>>} sequence The sequence.
  * @param {number} sampleRate The sample rate.
- * @return {number}
+ * @param {boolean|null} outputTyped True for Float64Array, false for Array.
+ * @return {!Array<number>|!Float64Array}
  * @private
  */
-function getOutputArraySize_(sequence, sampleRate) {
-  /** @type {number} */
-  let numSamples = 0;
-  for (let i = 0; i < sequence.length; i++) {
-    numSamples += Math.round(sampleRate * sequence[i].time);
+function getOutputObject_(sequence, sampleRate, outputTyped) {
+  if (outputTyped) {
+    /** @type {number} */
+    let numSamples = 0;
+    for (let i = 0; i < sequence.length; i++) {
+      numSamples += Math.round(sampleRate * sequence[i].time);
+    }
+    return new Float64Array(numSamples);
   }
-  return numSamples;
+  return [];
 }
