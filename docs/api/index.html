@@ -90,6 +90,11 @@ const sequence = [
 // The samples are 64-bit, in the -1 to 1 range.
 let samples = frequencySweep.sweep(sequence, 44100);
 </code></pre>
+<p>By default the samples are returned in a <strong>Array</strong>. To return the samples as a
+<strong>Float64Array</strong>, set the optional <em>outputTyped</em> param to <em>true</em>:</p>
+<pre class="prettyprint source lang-javascript"><code>// will return a Float64Array
+let samples = frequencySweep.sweep(sequence, 44100, true);
+</code></pre>
 <h3>Available waveforms:</h3>
 <ul>
 <li><em>'sine'</em></li>
@@ -116,9 +121,10 @@ var samples = frequencySweep.sweep(sequence, 44100);
  *     time: Float value, the duration of the segment. 1 = 1 second.
  *     wave: String, &quot;sine&quot;, &quot;square&quot;, &quot;triangle&quot;, &quot;sawtooth&quot; or &quot;noise&quot;.
  * @param {number} sampleRate The sample rate.
- * @return {!Array&lt;number>}
+ * @param {?boolean=} outputTyped True to return Float64Array, false for Array.
+ * @return {!Array&lt;number>|Float64Array}
  */
-function sweep(sequence, sampleRate) {}
+function sweep(sequence, sampleRate, outputTyped=false) {}
 </code></pre>
 <h2>LICENSE</h2>
 <p>Copyright (c) 2018 Rafael da Silva Rocha.</p>

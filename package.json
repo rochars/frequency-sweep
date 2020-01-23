@@ -1,6 +1,6 @@
 {
   "name": "frequency-sweep",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Sweep tone generator.",
   "homepage": "https://github.com/rochars/frequency-sweep",
   "author": "Rafael da Silva Rocha <rocha.rafaelsilva@gmail.com>",

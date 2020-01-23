@@ -53,6 +53,7 @@ var sequence = {start: 1, end: 2, time: 1, wave: "square"};
  *     time: Float value, the duration of the segment. 1 = 1 second.
  *     wave: String, "sine", "square", "triangle", "sawtooth" or "noise".
  * @param {number} sampleRate The sample rate.
- * @return {!Array<number>}
+ * @param {?boolean=} outputTyped True to return Float64Array, false for Array.
+ * @return {!Array<number>|Float64Array}
  */
-function sweep(sequence, sampleRate) {}
+function sweep(sequence, sampleRate, outputTyped=false) {}

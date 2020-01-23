@@ -19,3 +19,5 @@ const sequence = [
 
 
 let samples = sweep(sequence, 44100)
+
+let samplesTyped = sweep(sequence, 44100, true)

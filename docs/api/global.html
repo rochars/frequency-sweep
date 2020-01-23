@@ -124,7 +124,7 @@
 
     
 
-    <h4 class="name" id="sweep"><span class="type-signature"></span>sweep<span class="signature">(sequence<span class="signature-attributes">non-null</span>, sampleRate)</span><span class="type-signature"> &rarr; (non-null) {Array.&lt;number>}</span></h4>
+    <h4 class="name" id="sweep"><span class="type-signature"></span>sweep<span class="signature">(sequence<span class="signature-attributes">non-null</span>, sampleRate, outputTyped<span class="signature-attributes">opt, nullable</span>)</span><span class="type-signature"> &rarr; {!Array.&lt;number>|Float64Array}</span></h4>
 
     
 
@@ -136,7 +136,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line69">line 69</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line70">line 70</a>
     </li></ul></dd>
     
 
@@ -202,6 +202,8 @@
         <th>Type</th>
 
         
+        <th>Attributes</th>
+        
 
         
 
@@ -227,6 +229,14 @@
             </td>
 
             
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
 
             
 
@@ -250,10 +260,53 @@
             </td>
 
             
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
 
             
 
             <td class="description last">The sample rate.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>outputTyped</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                    &lt;nullable><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">True to return Float64Array, false for Array.</td>
         </tr>
 
     
@@ -286,7 +339,10 @@
     </dt>
     <dd>
         
-<span class="param-type">Array.&lt;number></span>
+<span class="param-type">!Array.&lt;number></span>
+|
+
+<span class="param-type">Float64Array</span>
 
 
     </dd>

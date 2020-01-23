@@ -76,7 +76,7 @@
  * @private
  */
 const WAVES = {
-  noise: function(t, delta, phase, start, end, phi0) {
+  noise: function() {
     return Math.random() * (1 - (-1)) + (-1);
   },
   sine: function(t, delta, phase, start, end, phi0) {
@@ -108,27 +108,36 @@ const WAVES = {
  *     time: Float value, the duration of the segment. 1 = 1 second.
  *     wave: String, "sine", "square", "triangle", "sawtooth" or "noise".
  * @param {number} sampleRate The sample rate.
- * @return {!Array&lt;number>}
+ * @param {?boolean=} outputTyped True to return Float64Array, false for Array.
+ * @return {!Array&lt;number>|!Float64Array}
  */
-export function sweep(sequence, sampleRate) {
+export function sweep(sequence, sampleRate, outputTyped=false) {
+  /** @type {number} */
   let phi0 = 0;
+  /** @type {number} */
   let phase = 0;
+  /** @type {number} */
   let numSamples = 0;
+  /** @type {number} */
   let duration = 0;
+  /** @type {number} */
   let delta = 0;
+  /** @type {!Array|!Float64Array} */
   let samples = [];
+  if (outputTyped) {
+    samples = new Float64Array(getOutputArraySize_(sequence, sampleRate));
+  }
+  /** @type {number} */
+  let x = 0;
   for (let i = 0; i &lt; sequence.length; i++) {
     numSamples = Math.round(sampleRate * sequence[i].time);
     duration = numSamples / sampleRate;
-    for (let x = 0; x &lt; numSamples; x++) {
+    /** @type {number} */
+    let limit = numSamples + x;
+    for (; x &lt; limit; x++) {
       delta = x / numSamples;
-      samples.push(
-        WAVES[sequence[i].wave](
-          duration * delta,
-          delta, phase,
-          sequence[i].start,
-          sequence[i].end,
-          phi0));
+      samples[x] = WAVES[sequence[i].wave](
+        duration*delta, delta, phase, sequence[i].start, sequence[i].end, phi0);
     }
     phase = 2 * Math.PI * duration *
         (sequence[i].start + (sequence[i].end - sequence[i].start) / 2);
@@ -136,7 +145,22 @@ export function sweep(sequence, sampleRate) {
   }
   return samples;
 }
-</code></pre>
+
+/**
+ * Return the size of the output array.
+ * @param {!Array&lt;Object&lt;string, string|number>>} sequence The sequence.
+ * @param {number} sampleRate The sample rate.
+ * @return {number}
+ * @private
+ */
+function getOutputArraySize_(sequence, sampleRate) {
+  /** @type {number} */
+  let numSamples = 0;
+  for (let i = 0; i &lt; sequence.length; i++) {
+    numSamples += Math.round(sampleRate * sequence[i].time);
+  }
+  return numSamples;
+}</code></pre>
         </article>
     </section>
 

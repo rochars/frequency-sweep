@@ -38,6 +38,13 @@ const sequence = [
 let samples = frequencySweep.sweep(sequence, 44100);
 ```
 
+By default the samples are returned in a **Array**. To return the samples as a
+**Float64Array**, set the optional *outputTyped* param to *true*:
+```javascript
+// will return a Float64Array
+let samples = frequencySweep.sweep(sequence, 44100, true);
+```
+
 ### Available waveforms:
 - *'sine'*
 - *'triangle'*
@@ -67,9 +74,10 @@ var samples = frequencySweep.sweep(sequence, 44100);
  *     time: Float value, the duration of the segment. 1 = 1 second.
  *     wave: String, "sine", "square", "triangle", "sawtooth" or "noise".
  * @param {number} sampleRate The sample rate.
- * @return {!Array<number>}
+ * @param {?boolean=} outputTyped True to return Float64Array, false for Array.
+ * @return {!Array<number>|Float64Array}
  */
-function sweep(sequence, sampleRate) {}
+function sweep(sequence, sampleRate, outputTyped=false) {}
 ```
 
 ## LICENSE

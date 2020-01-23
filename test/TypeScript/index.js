@@ -16,3 +16,4 @@ var sequence = [
     { start: 1, end: 1, time: 1, wave: "noise" }
 ];
 var samples = index_js_1.sweep(sequence, 44100);
+var samplesTyped = index_js_1.sweep(sequence, 44100, true);
